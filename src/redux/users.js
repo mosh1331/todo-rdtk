@@ -11,7 +11,7 @@ export const usersSlice = createSlice({
             state.entries.push(action.payload)
         },
         removeEntry:(state,action)=>{
-            state.entries = state.entries.filter(i => i.id != action.payload)
+            state.entries = state.entries.filter(i => i.id !== action.payload)
         }
     }
     
