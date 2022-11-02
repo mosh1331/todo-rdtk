@@ -1,16 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import AddItem from './components/addItem';
-import TodoList from './components/todoList';
+import TodoApp from './pages/todoApp';
+import Header from './components/header';
+import FormComponent from './pages/formComponent'
 
 function App() {
+  const [value, setValue] = React.useState("form");
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    console.log(newValue)
+  setValue(newValue);
+};
   return (
     <div className="App">
-      <div className="box">
-      <AddItem />
-      <TodoList /> 
-      </div>
+      <Header value={value} handleChange={handleChange}/>
+      {value === "todo" ?   <TodoApp/> :<FormComponent/> }
+    
     </div>
   );
 }
