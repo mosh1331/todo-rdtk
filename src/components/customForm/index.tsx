@@ -6,13 +6,19 @@ import {
   Button,
   Input,
   MenuItem,
-  Select,
   TextField,
   Typography
-} from '@mui/material'
+} from '@mui/material';
 import { Box } from '@mui/system'
+import { useSelector,useDispatch } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { addEntry } from '../../redux/users';
+import { v4 as uuidv4 } from 'uuid';
 
-const FormComponent = () => {
+const CustomForm = () => {
+  const dispatch = useDispatch()
+  const {entries} = useSelector((state:RootState )=> state.users)
+
   const schema = yup.object().shape({
     name: yup
       .string()
@@ -31,6 +37,7 @@ const FormComponent = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm({
     resolver: yupResolver(schema)
@@ -40,16 +47,21 @@ const FormComponent = () => {
   const submitHandler = (values:any,e:any) => {
     e.preventDefault()
     console.log(values,'val')
-    alert(JSON.stringify(values))
+    let item = {
+      ...values,
+      id:uuidv4()
+    } 
+    dispatch(addEntry(item))
+    reset()
+
   }
 
   return (
-    <div className='box'>
-      <form onSubmit={handleSubmit(submitHandler)}>
+      <form onSubmit={handleSubmit(submitHandler)} className="form-box">
         <Input
-          fullWidth={true}
           //@ts-ignore
           error={errors.name}
+          fullWidth
           type='text'
           placeholder='Name'
           {...register('name')}
@@ -80,8 +92,8 @@ const FormComponent = () => {
         <Box sx={{ p: 1 }} />
         <Typography>Do you have a Driver license?</Typography>
         <TextField
-          select
           fullWidth
+          select
           label='Select'
           defaultValue=''
           inputProps={register('hasLicense')}
@@ -95,11 +107,10 @@ const FormComponent = () => {
         </TextField>
         <Box sx={{ p: 1 }} />
         <Button fullWidth type='submit' variant={'contained'}>
-          Submit
+          Add Entry
         </Button>
       </form>
-    </div>
   )
 }
 
-export default FormComponent
+export default CustomForm;

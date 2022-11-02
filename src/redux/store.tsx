@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import todoReducer from './todo.js'
+import todoReducer from './todo.js';
+import usersReducer from './users.js';
 
 
 // export default configureStore({
@@ -10,7 +11,8 @@ import todoReducer from './todo.js'
 
 export const store = configureStore({
     reducer: {
-        todoList:todoReducer
+        todoList:todoReducer,
+        users:usersReducer
     },
   })
 
