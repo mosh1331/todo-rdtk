@@ -10,6 +10,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import { RootState } from '../../redux/store';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {removeEntry} from '../../redux/users'
+import { Typography } from '@mui/material';
 
 interface UserItem{
     name:string;
@@ -46,7 +47,7 @@ const {entries} = useSelector((state:RootState )=> state.users)
               <TableCell align="right">{row.age === 0 ? '--':row.age}</TableCell>
               <TableCell align="right" onClick={()=>dispatch(removeEntry(row.id))}><DeleteIcon /></TableCell>
             </TableRow>
-          )):null}
+          )):<Typography sx={{margin:"0 auto",color:'red',textAlign:"center"}}>No data</Typography>}
         </TableBody>
       </Table>
     </TableContainer>
